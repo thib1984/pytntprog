@@ -52,6 +52,12 @@ def compute_args():
         "--nocache",
         action="store_true",
         help="download the xml file even if the cache is not finished (24 hours by default)",
-    )     
+    ) 
+    my_parser.add_argument(
+        "-c",
+        "--current",
+        action="store_true",
+        help="current programm",
+    )         
     args = my_parser.parse_args()
     return args

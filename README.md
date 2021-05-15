@@ -49,6 +49,27 @@ categorie   : film d'animation
 age         : Tout public
 ```
 
+``pytntprog -c`` display current programm
+```
+~ pytntprog -c      
+[00687] 14:00 BFMTV Non Stop 
+[00068] 14:40 Canal+ Rugby : Top 14 (Bordeaux Bègles / Castres) 
+[00341] 14:40 M6 Chasseurs d'appart' 
+[00610] 15:15 C8 Le poids des souvenirs 
+[00919] 15:20 TF1 Séries Films Associées contre notre ex 
+[00323] 16:00 LCI LCI tout info 
+[...]
+[00826] 17:25 RMC Découverte Mécanos express Projet pirate
+[00860] 17:25 RMC Story New York police judiciaire L'éternel refrain
+[00674] 17:26 CSTAR Au coeur de l'enquête Gumball Race : 100 jours dans la course des milliardaires sans limites (n°3)
+[00307] 17:30 Arte Les hommes du désert : Dans les pas des chameliers du Sahara 
+[00642] 17:30 TFX Familles nombreuses : la vie en XXL 
+[00545] 17:31 La Chaîne parlementaire Allons plus loin 
+[00944] 17:32 Franceinfo Cultissime 
+
+```
+
+
 ``pytntprog -a`` display all tnt programm (current day by default)
 example :
 ```

@@ -56,6 +56,7 @@ def find():
         T.append(
             {
                 "time": start,
+                "time_end": stop,
                 "day": start[0:8],
                 "start": start[8:10] + ":" + start[10:12],
                 "end": stop[8:10] + ":" + stop[10:12],
@@ -123,7 +124,7 @@ def find():
                     + " "
                     + w["subtitle"]
                 )
-            trouve = False    
+            trouve = False
             if not compute_args().filter:
                 trouve = True
             else:
@@ -131,6 +132,11 @@ def find():
                 for search in compute_args().filter:
                     if search.lower() not in resume.lower():
                         trouve = False
+            if compute_args().current:
+                until = datetime.datetime(int(w["time"][0:4]),int(w["time"][4:6]),int(w["time"][6:8]),int(w["time"][8:10]),int(w["time"][10:12]),0).timestamp()-time.time()
+                since = datetime.datetime(int(w["time_end"][0:4]),int(w["time_end"][4:6]),int(w["time_end"][6:8]),int(w["time_end"][8:10]),int(w["time_end"][10:12]),0).timestamp()-time.time()
+                if (until>3600) or (since < 0):
+                    trouve = False     
             if compute_args().all:
                 if trouve:
                     print(resume)
