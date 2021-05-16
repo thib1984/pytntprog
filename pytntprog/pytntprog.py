@@ -74,7 +74,6 @@ def find():
 
         i = i + 1
     T.sort(key=lambda x: x["time"])
-
     if compute_args().id:
         for w in T:
             if w["id"] == compute_args().id.zfill(5):
@@ -132,11 +131,14 @@ def find():
                 for search in compute_args().filter:
                     if search.lower() not in resume.lower():
                         trouve = False
+                        break
             if compute_args().current:
                 until = datetime.datetime(int(w["time"][0:4]),int(w["time"][4:6]),int(w["time"][6:8]),int(w["time"][8:10]),int(w["time"][10:12]),0).timestamp()-time.time()
                 since = datetime.datetime(int(w["time_end"][0:4]),int(w["time_end"][4:6]),int(w["time_end"][6:8]),int(w["time_end"][8:10]),int(w["time_end"][10:12]),0).timestamp()-time.time()
                 if (until>3600) or (since < 0):
-                    trouve = False     
+                    trouve = False
+                if (until>3600):
+                    break   
             if compute_args().all:
                 if trouve:
                     print(resume)
