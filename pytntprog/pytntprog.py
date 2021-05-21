@@ -15,6 +15,10 @@ import tempfile
 
 
 def find():
+    alll = compute_args().all
+    idd = compute_args().id
+    ffilter = compute_args().filter
+    ccurrent = compute_args().current
     url = "https://xmltv.ch/xmltv/xmltv-tnt.xml"
     if compute_args().nocache or not os.path.exists(tempfile.gettempdir()+"/tnt.xml") or (
         time.time() - os.stat(tempfile.gettempdir()+"/tnt.xml").st_mtime > 86400
@@ -74,9 +78,10 @@ def find():
 
         i = i + 1
     T.sort(key=lambda x: x["time"])
-    if compute_args().id:
+    
+    if idd:
         for w in T:
-            if w["id"] == compute_args().id.zfill(5):
+            if w["id"] == idd.zfill(5):
                 print(
                     "titre       : "
                     + w["title"]
@@ -95,7 +100,8 @@ def find():
                 break
     else:
         for w in T:
-            if compute_args().all:
+
+            if alll:
                 resume = (
                     "["
                     + w["id"]
@@ -124,22 +130,24 @@ def find():
                     + w["subtitle"]
                 )
             trouve = False
-            if not compute_args().filter:
+            
+            if not ffilter:
                 trouve = True
             else:
                 trouve = True
-                for search in compute_args().filter:
+                for search in ffilter:
                     if search.lower() not in resume.lower():
                         trouve = False
                         break
-            if compute_args().current:
+            
+            if ccurrent:
                 until = datetime.datetime(int(w["time"][0:4]),int(w["time"][4:6]),int(w["time"][6:8]),int(w["time"][8:10]),int(w["time"][10:12]),0).timestamp()-time.time()
                 since = datetime.datetime(int(w["time_end"][0:4]),int(w["time_end"][4:6]),int(w["time_end"][6:8]),int(w["time_end"][8:10]),int(w["time_end"][10:12]),0).timestamp()-time.time()
                 if (until>3600) or (since < 0):
                     trouve = False
                 if (until>3600):
                     break   
-            if compute_args().all:
+            if alll:
                 if trouve:
                     print(resume)
             else:
