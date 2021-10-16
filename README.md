@@ -14,14 +14,14 @@ or
 
 # 🚀 How use **pytntprog**
 
-``pytntprog`` display the tnt programm for the current day with id index
-``pytntprog -i [id]`` display the details of the programm with id
-``pytntprog -c`` display current programm
-``pytntprog -a`` display all tnt programm (current day by default)
-``pytntprog -f "TF1"`` display the tnt programm for the current day with filter TF1
-``pytntprog -f "Stade 2" "France 3"`` display the tnt programm for the current day with filter Stade 2 + France 3
-``-n`` or ``--no-chache`` download the distant xml file event if the cache is not finished (24h by default)
-``pytntprog -u`` to update pytntprog
+- ``pytntprog`` display the tnt programm for the current day with id index
+- ``pytntprog -i [id]`` display the details of the programm with id
+- ``pytntprog -c`` display current programm
+- ``pytntprog -a`` display all tnt programm (current day by default)
+- ``pytntprog -f "TF1"`` display the tnt programm for the current day with filter TF1
+- ``pytntprog -f "Stade 2" "France 3"`` display the tnt programm for the current day with filter Stade 2 + France 3
+- ``pytntprog -n`` or ``pytntprog --no-chache`` download the distant xml file event if the cache is not finished (24h by default)
+- ``pytntprog -u`` to update pytntprog
 
 # :package: Changelog
 
