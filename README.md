@@ -18,27 +18,23 @@ pytntprog displays the program of tnt tv in France
 - ``pytntprog -n`` or ``pytntprog --no-chache`` download the distant xml file event if the cache is not finished (24h by default)
 - ``pytntprog -u`` to update pytntprog
 
-# :gear: How install or upgrade **pytntprog**
+# :gear: Install
 
-## Prerequisites
+See [this page](INSTALL.md)
 
-- Install Python 3 for your system
-- Install pip3* for your system
-- Install git for your system
+# :construction_worker: Contribution
 
-*_Install pip instead of pip3, if pip3 does not exist for your OS_
-## Installation
-
-``pip3 install pytntprog``*
-
-*_Use pip instead of pip3, if pip3 does not exist_
-
-## Upgrade
-
-``pytntprog -u``
+See [this page](CONTRIBUTING.md)
 
 # :package: Changelog
 
-## 0.4.0
 
-- Increase performance and time response
+See [this page](CHANGELOG.md)
+
+# License
+
+MIT License
+
+Copyright (c) 2021 [thib1984](https://github.com/thib1984)
+
+See [this page](LICENSE.txt) for details
