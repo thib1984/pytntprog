@@ -33,7 +33,7 @@ See [this page](CONTRIBUTING.md)
 
 See [this page](CHANGELOG.md)
 
-# License
+# :pencil: License
 
 MIT License
 
