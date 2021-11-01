@@ -10,6 +10,7 @@ pytntprog displays the program of tnt tv in France
 # 🚀 How use **pytntprog**
 
 - ``pytntprog`` display the tnt programm for the current day with id index
+- ``pytntprog -h`` show the help message
 - ``pytntprog -i [id]`` display the details of the programm with id
 - ``pytntprog -c`` display current programm
 - ``pytntprog -a`` display all tnt programm (current day by default)
