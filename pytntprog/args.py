@@ -58,6 +58,12 @@ def compute_args():
         "--current",
         action="store_true",
         help="current programm",
-    )         
+    )
+    my_parser.add_argument(
+        "-N",
+        "--nocolor",
+        action="store_true",
+        help="disable color in sysout",
+    )                 
     args = my_parser.parse_args()
     return args

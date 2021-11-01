@@ -18,6 +18,8 @@ pytntprog displays the program of tnt tv in France
 - ``pytntprog -n`` or ``pytntprog --no-chache`` download the distant xml file event if the cache is not finished (24h by default)
 - ``pytntprog -u`` to update pytntprog
 
+If you add ``--nocolor/-N`` option, you disable the colors in sysout
+
 # :gear: Install
 
 See [this page](INSTALL.md)

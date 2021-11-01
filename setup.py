@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="pytntprog",
-    version="0.0.4",
+    version="0.0.5",
     description="pytntprog displays the program of tnt tv in France",
     long_description="The complete description/installation/use/FAQ is available at : https://github.com/thib1984/pytntprog#readme",
     url="https://github.com/thib1984/pytntprog",
@@ -11,7 +11,7 @@ setup(
     author_email="thibault.garcon@gmail.com",
     license="MIT",
     packages=["pytntprog"],
-    install_requires=[],
+    install_requires=["colorama","termcolor"],
     zip_safe=False,
     entry_points={
         "console_scripts": [

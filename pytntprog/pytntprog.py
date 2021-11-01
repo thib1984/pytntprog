@@ -12,13 +12,18 @@ import time
 from pytntprog.args import compute_args
 import datetime
 import tempfile
-
+import colorama
+from termcolor import colored
 
 def find():
     alll = compute_args().all
     idd = compute_args().id
     ffilter = compute_args().filter
     ccurrent = compute_args().current
+    nocolor = compute_args().nocolor
+
+    colorama.init()
+
     url = "https://xmltv.ch/xmltv/xmltv-tnt.xml"
     if compute_args().nocache or not os.path.exists(tempfile.gettempdir()+"/tnt.xml") or (
         time.time() - os.stat(tempfile.gettempdir()+"/tnt.xml").st_mtime > 86400
@@ -103,31 +108,29 @@ def find():
 
             if alll:
                 resume = (
-                    "["
-                    + w["id"]
-                    + "] "
+                    my_colored("["+ w["id"]+ "] ","red",nocolor)
+                    + " "
                     + w["day"]
                     + " "
-                    + w["start"]
+                    + my_colored(w["start"],"gree",nocolor)
                     + " "
-                    + w["channel"]
+                    + my_colored(w["channel"],"yellow",nocolor)
                     + " "
-                    + w["title"]
+                    + my_colored(w["title"]
                     + " "
-                    + w["subtitle"]
+                    + w["subtitle"],"cyan",nocolor)
                 )
             else:
                 resume = (
-                    "["
-                    + w["id"]
-                    + "] "
-                    + w["start"]
+                    my_colored("["+ w["id"] + "] ","red",nocolor)
                     + " "
-                    + w["channel"]
+                    + my_colored(w["start"],"green",nocolor)
                     + " "
-                    + w["title"]
+                    + my_colored(w["channel"],"yellow",nocolor)
                     + " "
-                    + w["subtitle"]
+                    + my_colored(w["title"]
+                    + " "
+                    + w["subtitle"],"cyan",nocolor)
                 )
             trouve = False
             
@@ -158,3 +161,8 @@ def find():
                     "%Y%m%d"
                 ):
                     break
+
+def my_colored(message,color,nocolor):
+    if nocolor:
+        return message
+    return colored(message,color)   
