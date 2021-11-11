@@ -112,7 +112,7 @@ def find():
                     + " "
                     + w["day"]
                     + " "
-                    + my_colored(w["start"],"gree",nocolor)
+                    + my_colored(w["start"],"green",nocolor)
                     + " "
                     + my_colored(w["channel"],"yellow",nocolor)
                     + " "
