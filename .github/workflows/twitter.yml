@@ -29,9 +29,10 @@ jobs:
       #installation          
       - name: install pytntprog 
         run: |
-          pip install pytntprog && pytntprog -f "21:"" && mkdir export
+          pip install pytntprogpytntprog -f "21:" && mkdir export
       - name: execute
-        run: pytntprog -f "21:" > export/export.txt
+        run: |
+          pytntprog -f "21:" > export/export.txt
       - name: export png
         run: carbon-now -h -t export export/export.txt  
       - name: list
