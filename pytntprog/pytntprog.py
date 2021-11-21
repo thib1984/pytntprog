@@ -209,8 +209,11 @@ def find():
                     "%Y%m%d"
                 ):
                     break
-        table = columnar(data, headers, no_borders=True, wrap_max=0)
-        print(table)
+        if data != []:        
+            table = columnar(data, headers, no_borders=True, wrap_max=0)
+            print(table)
+        else:
+            print(my_colored("attention : aucun résultat", "yellow", nocolor))  
 
 
 def my_colored(message, color, nocolor):

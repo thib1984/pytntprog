@@ -33,8 +33,34 @@ jobs:
       - name: execute
         run: |
           pytntprog -f "21:" > export/export.txt
-      - name: export png
-        run: carbon-now -h -t export export/export.txt  
+      #5 tests (unstable)    
+      - name: export_png_1
+        continue-on-error: true
+        run: carbon-now -h -t export export/export.txt
+      - name: export_png_2
+        if: steps.export_png_1.outcome=='failure'
+        continue-on-error: true
+        run: carbon-now -h -t export export/export.txt 
+      - name: export_png_3
+        if: steps.export_png_2.outcome=='failure'
+        continue-on-error: true
+        run: carbon-now -h -t export export/export.txt 
+      - name: export_png_4
+        if: steps.export_png_3.outcome=='failure'
+        continue-on-error: true
+        run: carbon-now -h -t export export/export.txt 
+      - name: export_png_5
+        if: steps.export_png_4.outcome=='failure'
+        continue-on-error: true 
+        run: carbon-now -h -t export export/export.txt
+      - name: set the status              # set the workflow status if command failed
+        if: always()
+        run: |
+          if ${{ steps.export_png_1.outcome=='success' || steps.export_png_2.outcome=='success' || steps.export_png_3.outcome=='success' || steps.export_png_4.outcome=='success' || steps.export_png_5.outcome=='success' }}; then
+             echo fine
+          else
+             exit 1
+          fi                                        
       - name: list
         run: ls export/*
       - name: tweet

@@ -1,3 +1,7 @@
+# 1.1.2
+
+- [x] fix unstable carbon-now in githubaction
+- [x] fix if not result
 # 1.1.1
 
 - [x] add requests module
