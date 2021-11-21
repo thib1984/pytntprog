@@ -11,9 +11,13 @@ import os
 import time
 from pytntprog.args import compute_args
 import datetime
-import tempfile
 import colorama
 from termcolor import colored
+from columnar import columnar
+from pathlib import Path
+
+
+DOSSIER_CONFIG_PYTNTPROG = "pytntprog"
 
 def find():
     alll = compute_args().all
@@ -24,14 +28,31 @@ def find():
 
     colorama.init()
 
-    url = "https://xmltv.ch/xmltv/xmltv-tnt.xml"
-    if compute_args().nocache or not os.path.exists(tempfile.gettempdir()+"/tnt.xml") or (
-        time.time() - os.stat(tempfile.gettempdir()+"/tnt.xml").st_mtime > 86400
+
+    xml_tnt = "tnt.xml"
+    if (
+        compute_args().cache
+        or not os.path.exists(
+            get_user_config_directory_pytntprog() + xml_tnt
+        )
+        or (
+            time.time()
+            - os.stat(
+                get_user_config_directory_pytntprog() + xml_tnt
+            ).st_mtime
+            > 86400 * 30
+        )
     ):
+        url = "https://xmltv.ch/xmltv/xmltv-tnt.xml"
         print("download the distant xml file...")
-        urllib.request.urlretrieve(url, tempfile.gettempdir()+"/tnt.xml")
+        urllib.request.urlretrieve(
+            url, get_user_config_directory_pytntprog() + xml_tnt
+        )
         print("download is finished")
-    tree = ET.parse(tempfile.gettempdir()+"/tnt.xml")
+
+    
+
+    tree = ET.parse(get_user_config_directory_pytntprog() + xml_tnt)
     root = tree.getroot()
     T = []
     i = 1
@@ -83,7 +104,7 @@ def find():
 
         i = i + 1
     T.sort(key=lambda x: x["time"])
-    
+
     if idd:
         for w in T:
             if w["id"] == idd.zfill(5):
@@ -104,65 +125,133 @@ def find():
                 print("age         : " + w["age"])
                 break
     else:
+        if alll:
+            headers = ["id", "jour", "heure", "chaine", "programmes"]
+        else:
+            headers = ["id", "heure", "chaine", "programmes"]
+        data = []
         for w in T:
 
             if alll:
-                resume = (
-                    my_colored("["+ w["id"]+ "] ","red",nocolor)
-                    + " "
-                    + w["day"]
-                    + " "
-                    + my_colored(w["start"],"green",nocolor)
-                    + " "
-                    + my_colored(w["channel"],"yellow",nocolor)
-                    + " "
-                    + my_colored(w["title"]
-                    + " "
-                    + w["subtitle"],"cyan",nocolor)
-                )
+                resume = [
+                    my_colored("[" + w["id"] + "] ", "red", nocolor),
+                    w["day"],
+                    my_colored(w["start"], "green", nocolor),
+                    my_colored(w["channel"], "yellow", nocolor),
+                    my_colored(
+                        w["title"] + " " + w["subtitle"],
+                        "cyan",
+                        nocolor,
+                    ),
+                ]
+
             else:
-                resume = (
-                    my_colored("["+ w["id"] + "] ","red",nocolor)
-                    + " "
-                    + my_colored(w["start"],"green",nocolor)
-                    + " "
-                    + my_colored(w["channel"],"yellow",nocolor)
-                    + " "
-                    + my_colored(w["title"]
-                    + " "
-                    + w["subtitle"],"cyan",nocolor)
-                )
+                resume = [
+                    my_colored("[" + w["id"] + "] ", "red", nocolor),
+                    my_colored(w["start"], "green", nocolor),
+                    my_colored(w["channel"], "yellow", nocolor),
+                    my_colored(
+                        w["title"] + " " + w["subtitle"],
+                        "cyan",
+                        nocolor,
+                    ),
+                ]
+
             trouve = False
-            
+
             if not ffilter:
                 trouve = True
             else:
                 trouve = True
                 for search in ffilter:
-                    if search.lower() not in resume.lower():
+                    if search.lower() not in " ".join(resume).lower():
                         trouve = False
                         break
-            
+
             if ccurrent:
-                until = datetime.datetime(int(w["time"][0:4]),int(w["time"][4:6]),int(w["time"][6:8]),int(w["time"][8:10]),int(w["time"][10:12]),0).timestamp()-time.time()
-                since = datetime.datetime(int(w["time_end"][0:4]),int(w["time_end"][4:6]),int(w["time_end"][6:8]),int(w["time_end"][8:10]),int(w["time_end"][10:12]),0).timestamp()-time.time()
-                if (until>3600) or (since < 0):
+                until = (
+                    datetime.datetime(
+                        int(w["time"][0:4]),
+                        int(w["time"][4:6]),
+                        int(w["time"][6:8]),
+                        int(w["time"][8:10]),
+                        int(w["time"][10:12]),
+                        0,
+                    ).timestamp()
+                    - time.time()
+                )
+                since = (
+                    datetime.datetime(
+                        int(w["time_end"][0:4]),
+                        int(w["time_end"][4:6]),
+                        int(w["time_end"][6:8]),
+                        int(w["time_end"][8:10]),
+                        int(w["time_end"][10:12]),
+                        0,
+                    ).timestamp()
+                    - time.time()
+                )
+                if (until > 3600) or (since < 0):
                     trouve = False
-                if (until>3600):
-                    break   
+                if until > 3600:
+                    break
             if alll:
                 if trouve:
-                    print(resume)
+                    data.append(resume)
             else:
-                if w["day"] == datetime.date.today().strftime(
-                    "%Y%m%d") and trouve:
-                    print(resume)
+                if (
+                    w["day"]
+                    == datetime.date.today().strftime("%Y%m%d")
+                    and trouve
+                ): 
+                    data.append(resume)
                 if w["day"] > datetime.date.today().strftime(
                     "%Y%m%d"
                 ):
                     break
+        table = columnar(data, headers, no_borders=True, wrap_max=0)
+        print(table)
 
-def my_colored(message,color,nocolor):
+
+def my_colored(message, color, nocolor):
     if nocolor:
         return message
-    return colored(message,color)   
+    return colored(message, color)
+
+def get_user_config_directory_pytntprog():
+    nocolor = compute_args().nocolor
+    if os.name == "nt":
+        appdata = os.getenv("LOCALAPPDATA")
+        if appdata:
+            ze_path = os.path.join(
+                appdata, DOSSIER_CONFIG_PYTNTPROG, ""
+            )
+            Path(ze_path).mkdir(parents=True, exist_ok=True)
+            return ze_path
+        appdata = os.getenv("APPDATA")
+        if appdata:
+            ze_path = os.path.join(
+                appdata, DOSSIER_CONFIG_PYTNTPROG, ""
+            )
+            Path(ze_path).mkdir(parents=True, exist_ok=True)
+            return ze_path
+        print(
+            my_colored(
+                "erreur : impossible de créer le dossier de config",
+                "red",nocolor
+            )
+        )
+        sys.exit(1)
+    xdg_config_home = os.getenv("XDG_CONFIG_HOME")
+    if xdg_config_home:
+        ze_path = os.path.join(xdg_config_home, "")
+        Path(ze_path).mkdir(parents=True, exist_ok=True)
+        return ze_path
+    ze_path = os.path.join(
+        os.path.expanduser("~"),
+        ".config",
+        DOSSIER_CONFIG_PYTNTPROG,
+        "",
+    )
+    Path(ze_path).mkdir(parents=True, exist_ok=True)
+    return ze_path    

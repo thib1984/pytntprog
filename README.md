@@ -16,10 +16,10 @@ pytntprog displays the program of tnt tv in France
 - ``pytntprog -a`` display all tnt programm (current day by default)
 - ``pytntprog -f "TF1"`` display the tnt programm for the current day with filter TF1
 - ``pytntprog -f "Stade 2" "France 3"`` display the tnt programm for the current day with filter Stade 2 + France 3
-- ``pytntprog -n`` or ``pytntprog --no-chache`` download the distant xml file event if the cache is not finished (24h by default)
+- ``pytntprog -C`` or ``pytntprog --chache`` download the distant xml file event if the cache is not finished (24h by default)
 - ``pytntprog -u`` to update pytntprog
 
-If you add ``--nocolor/-N`` option, you disable the colors in sysout
+If you add ``--nocolor/-n`` option, you disable the colors in sysout
 
 # :gear: Install
 

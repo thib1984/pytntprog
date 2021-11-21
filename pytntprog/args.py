@@ -48,8 +48,8 @@ def compute_args():
         help="display all days results (current day by default)",
     )        
     my_parser.add_argument(
-        "-n",
-        "--nocache",
+        "-C",
+        "--cache",
         action="store_true",
         help="download the xml file even if the cache is not finished (24 hours by default)",
     ) 
@@ -60,7 +60,7 @@ def compute_args():
         help="current programm",
     )
     my_parser.add_argument(
-        "-N",
+        "-n",
         "--nocolor",
         action="store_true",
         help="disable color in sysout",

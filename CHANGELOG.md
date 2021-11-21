@@ -1,3 +1,9 @@
+# 1.1.0 (WIP)
+
+- [x] switch n/N/C for cache
+- [x] columnar
+- [x] move cache from /tmp to .config
+
 # 1.0.0
 
 - [x] fix bug with all and color options
