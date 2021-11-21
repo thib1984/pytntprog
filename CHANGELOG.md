@@ -1,4 +1,8 @@
-# 1.1.0 (WIP)
+# 1.1.1
+
+- [x] add requests module
+
+# 1.1.0
 
 - [x] switch n/N/C for cache
 - [x] columnar
