@@ -40,7 +40,7 @@ def find():
             - os.stat(
                 get_user_config_directory_pytntprog() + xml_tnt
             ).st_mtime
-            > 86400 * 30
+            > 86400 * 1
         )
     ):
         url = "https://xmltv.ch/xmltv/xmltv-tnt.xml"
