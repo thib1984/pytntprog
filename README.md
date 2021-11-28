@@ -13,6 +13,7 @@ pytntprog displays the program of tnt tv in France
 - ``pytntprog -h`` show the help message
 - ``pytntprog -i [id]`` display the details of the programm with id
 - ``pytntprog -c`` display current programm
+- ``pytntprog -l [INT]`` filter programm with minimal length in minutes
 - ``pytntprog -a`` display all tnt programm (current day by default)
 - ``pytntprog -f "TF1"`` display the tnt programm for the current day with filter TF1
 - ``pytntprog -f "Stade 2" "France 3"`` display the tnt programm for the current day with filter Stade 2 + France 3

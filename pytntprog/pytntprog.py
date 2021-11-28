@@ -25,6 +25,7 @@ def find():
     ffilter = compute_args().filter
     ccurrent = compute_args().current
     nocolor = compute_args().nocolor
+    duree_max = compute_args().length
 
     colorama.init()
 
@@ -83,6 +84,12 @@ def find():
         age = ""
         if neighbor.find("rating") != None:
             age = neighbor.find("rating").find("value").text
+        length = ""
+        if neighbor.find("length") != None:
+            if neighbor.find("length").get("units") == "minutes":
+                length=int(neighbor.find("length").text)
+            else:
+                length=int(neighbor.find("length").text)*60         
         T.append(
             {
                 "time": start,
@@ -99,6 +106,7 @@ def find():
                 "age": age,
                 "episode": episode,
                 "date": date,
+                "length": length
             }
         )
 
@@ -118,6 +126,7 @@ def find():
                 print("jour        : " + w["day"])
                 print("heure debut : " + w["start"])
                 print("heure fin   : " + w["end"])
+                print("durée min.  : " + str(w["length"]))
                 print("resume      : " + w["description"])
                 print("episode     : " + w["episode"])
                 print("date        : " + w["date"])
@@ -196,13 +205,13 @@ def find():
                 if until > 3600:
                     break
             if alll:
-                if trouve:
+                if trouve and w["length"]>duree_max:
                     data.append(resume)
             else:
                 if (
                     w["day"]
                     == datetime.date.today().strftime("%Y%m%d")
-                    and trouve
+                    and trouve and w["length"]>duree_max
                 ): 
                     data.append(resume)
                 if w["day"] > datetime.date.today().strftime(

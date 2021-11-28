@@ -32,7 +32,14 @@ def compute_args():
         "--id",
         type=str,
         help="show full details for id programm",
-    )    
+    )
+    my_parser.add_argument(
+        "-l",
+        "--length",
+        type=int,
+        default=0,
+        help="duree minimale en minute",
+    )           
     my_parser.add_argument(
         "-f",
         "--filter",

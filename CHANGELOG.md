@@ -1,3 +1,7 @@
+# 1.2.0
+
+- [x] parametre duree
+
 # 1.1.3
 
 - [x] cache one day
