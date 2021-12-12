@@ -32,7 +32,8 @@ jobs:
           pip install pytntprog && pytntprog -f "21:" && mkdir export
       - name: execute
         run: |
-          pytntprog -f "21:" > export/export.txt
+          pytntprog -l 20 -f "20:" > export/export.txt        
+          pytntprog -l 20 -f "21:" >> export/export.txt
       #5 tests (unstable)    
       - name: export_png_1
         id: export_png_1 
