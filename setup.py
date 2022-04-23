@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="pytntprog",
-    version="1.2.0",
+    version="1.3.0",
     description="pytntprog displays the program of tnt tv in France",
     long_description="The complete description/installation/use/FAQ is available at : https://github.com/thib1984/pytntprog#readme",
     url="https://github.com/thib1984/pytntprog",

@@ -1,3 +1,6 @@
+# 1.3.0
+
+- [x] filter-full
 # 1.2.0
 
 - [x] parametre duree

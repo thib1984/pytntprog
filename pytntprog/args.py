@@ -49,6 +49,14 @@ def compute_args():
         help="cumultative filter the results",
     )
     my_parser.add_argument(
+        "-F",
+        "--Filter",
+        action="store",
+        nargs="+",
+        type=str,
+        help="cumultative filter-full the results",
+    )    
+    my_parser.add_argument(
         "-a",
         "--all",
         action="store_true",

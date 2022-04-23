@@ -23,6 +23,7 @@ def find():
     alll = compute_args().all
     idd = compute_args().id
     ffilter = compute_args().filter
+    ffilterfull = compute_args().Filter
     ccurrent = compute_args().current
     nocolor = compute_args().nocolor
     duree_max = compute_args().length
@@ -175,7 +176,15 @@ def find():
                 for search in ffilter:
                     if search.lower() not in " ".join(resume).lower():
                         trouve = False
-                        break
+
+                        
+            if trouve and ffilterfull:
+                trouve = True
+                for search in ffilterfull:
+                    if (search.lower() not in " ".join(resume).lower() and search.lower() not in w["category"].lower()) and (search.lower() not in w["description"].lower()):
+                        trouve = False
+
+     
 
             if ccurrent:
                 until = (
