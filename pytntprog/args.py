@@ -79,6 +79,11 @@ def compute_args():
         "--nocolor",
         action="store_true",
         help="disable color in sysout",
-    )                 
+    ) 
+    my_parser.add_argument(
+        "--full",
+        action="store_true",
+        help="use the full chanels (not only tnt)",
+    )                     
     args = my_parser.parse_args()
     return args

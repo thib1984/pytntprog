@@ -15,8 +15,47 @@ import colorama
 from termcolor import colored
 from columnar import columnar
 from pathlib import Path
+import urllib.request
+import lzma
+import shutil
+import os
+import urllib.request
+import lzma
+import shutil
+import os
+import py7zr
 
+def download_file(url, tmp_path):
+    print(f"Downloading {url} ...")
+    urllib.request.urlretrieve(url, tmp_path)
+    if os.path.getsize(tmp_path) == 0:
+        raise ValueError(f"Le fichier téléchargé est vide : {tmp_path}")
+    print(f"Downloaded to {tmp_path}")
+    return tmp_path
 
+def extract_file(tmp_path, dest_path):
+    # Lire les 6 premiers octets pour détecter le type
+    with open(tmp_path, "rb") as f:
+        magic = f.read(6)
+
+    # XZ : FD 37 7A 58 5A 00
+    if magic == b"\xfd7zXZ\x00":
+        print("Detected XZ file, decompressing...")
+        with lzma.open(tmp_path, "rb") as f_in, open(dest_path, "wb") as f_out:
+            shutil.copyfileobj(f_in, f_out)
+    else:
+        # On essaie avec 7-Zip
+        print("Detected 7-Zip file, extracting...")
+        with py7zr.SevenZipFile(tmp_path, mode='r') as z:
+            z.extractall(path=os.path.dirname(dest_path))
+    print(f"File extracted to {dest_path}")
+    os.remove(tmp_path)
+
+def download_and_extract(url, dest_path):
+    tmp_path = dest_path + ".tmp"
+    download_file(url, tmp_path)
+    extract_file(tmp_path, dest_path)
+    
 DOSSIER_CONFIG_PYTNTPROG = "pytntprog"
 
 def find():
@@ -27,11 +66,12 @@ def find():
     ccurrent = compute_args().current
     nocolor = compute_args().nocolor
     duree_max = compute_args().length
-
+    full = compute_args().full
     colorama.init()
 
 
-    xml_tnt = "tnt.xml"
+    xml_tnt = "xmltv_tnt.xml"
+    xml_tnt_full = "xmltv_fr.xml"
     if (
         compute_args().cache
         or not os.path.exists(
@@ -45,16 +85,22 @@ def find():
             > 86400 * 1
         )
     ):
-        url = "https://xmltv.ch/xmltv/xmltv-tnt.xml"
-        print("download the distant xml file...")
-        urllib.request.urlretrieve(
-            url, get_user_config_directory_pytntprog() + xml_tnt
-        )
-        print("download is finished")
 
+        # Répertoire de config utilisateur
+        config_dir = get_user_config_directory_pytntprog()
+        os.makedirs(config_dir, exist_ok=True)
+
+
+        # Télécharger et décompresser
+        download_and_extract("https://xmltvfr.fr/xmltv/xmltv_tnt.xz", os.path.join(config_dir, xml_tnt))
+        download_and_extract("https://xmltvfr.fr/xmltv/xmltv_fr.xz", os.path.join(config_dir, xml_tnt_full))
+
+        print("Download finished, XML files ready!")
     
-
-    tree = ET.parse(get_user_config_directory_pytntprog() + xml_tnt)
+    if not full:
+        tree = ET.parse(get_user_config_directory_pytntprog() + xml_tnt)
+    else:
+        tree = ET.parse(get_user_config_directory_pytntprog() + xml_tnt_full)    
     root = tree.getroot()
     T = []
     i = 1
@@ -76,9 +122,6 @@ def find():
         category = ""
         if neighbor.find("category") != None:
             category = neighbor.find("category").text
-        date = ""
-        if neighbor.find("date") != None:
-            date = neighbor.find("date").text
         episode = ""
         if neighbor.find("episode-num") != None:
             episode = neighbor.find("episode-num").text
@@ -86,11 +129,10 @@ def find():
         if neighbor.find("rating") != None:
             age = neighbor.find("rating").find("value").text
         length = ""
-        if neighbor.find("length") != None:
-            if neighbor.find("length").get("units") == "minutes":
-                length=int(neighbor.find("length").text)
-            else:
-                length=int(neighbor.find("length").text)*60         
+        fmt = "%Y%m%d%H%M%S %z"
+        dt_start = datetime.datetime.strptime(start, fmt)
+        dt_stop = datetime.datetime.strptime(stop, fmt)
+        length = int((dt_stop - dt_start).total_seconds() / 60)    
         T.append(
             {
                 "time": start,
@@ -106,7 +148,6 @@ def find():
                 "category": category,
                 "age": age,
                 "episode": episode,
-                "date": date,
                 "length": length
             }
         )
@@ -130,7 +171,6 @@ def find():
                 print("durée min.  : " + str(w["length"]))
                 print("resume      : " + w["description"])
                 print("episode     : " + w["episode"])
-                print("date        : " + w["date"])
                 print("categorie   : " + w["category"])
                 print("age         : " + w["age"])
                 break
@@ -220,7 +260,7 @@ def find():
                 if (
                     w["day"]
                     == datetime.date.today().strftime("%Y%m%d")
-                    and trouve and w["length"]>duree_max
+                    and trouve and int(w["length"])>duree_max
                 ): 
                     data.append(resume)
                 if w["day"] > datetime.date.today().strftime(
