@@ -1,6 +1,18 @@
+# 3.0.0
+
+- [x] fix 403 error
+- [x] delete self-upgrad
+- [x] fix docs
+- [x] fix contributing
+
+# 2.0.0
+
+- [x] change back-api
+
 # 1.3.0
 
 - [x] filter-full
+
 # 1.2.0
 
 - [x] parametre duree

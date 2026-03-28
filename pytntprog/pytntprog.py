@@ -27,7 +27,14 @@ import py7zr
 
 def download_file(url, tmp_path):
     print(f"Downloading {url} ...")
-    urllib.request.urlretrieve(url, tmp_path)
+    req = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": "Mozilla/5.0"
+        }
+    )    
+    with urllib.request.urlopen(req) as response, open(tmp_path, 'wb') as out_file:
+        out_file.write(response.read())
     if os.path.getsize(tmp_path) == 0:
         raise ValueError(f"Le fichier téléchargé est vide : {tmp_path}")
     print(f"Downloaded to {tmp_path}")

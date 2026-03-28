@@ -22,12 +22,6 @@ def compute_args():
         Written by thib1984.""",
     )
     my_parser.add_argument(
-        "-u",
-        "--update",
-        action="store_true",
-        help="update pytntprog",
-    )
-    my_parser.add_argument(
         "-i",
         "--id",
         type=str,

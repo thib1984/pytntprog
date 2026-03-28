@@ -3,4 +3,5 @@ dist
 pytntprog.egg-info
 .vscode
 venv
+pytntprog_env
 

@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="pytntprog",
-    version="2.0.1",
+    version="3.0.0",
     description="pytntprog displays the program of tnt tv in France",
     long_description="The complete description/installation/use/FAQ is available at : https://github.com/thib1984/pytntprog#readme",
     url="https://github.com/thib1984/pytntprog",
@@ -27,6 +27,8 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",                
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
