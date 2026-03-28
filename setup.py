@@ -3,14 +3,14 @@ from setuptools import setup
 
 setup(
     name="pytntprog",
-    version="3.0.0",
+    version="3.0.1",
     description="pytntprog displays the program of tnt tv in France",
     long_description="The complete description/installation/use/FAQ is available at : https://github.com/thib1984/pytntprog#readme",
     url="https://github.com/thib1984/pytntprog",
     author="thib1984",
     author_email="thibault.garcon@gmail.com",
     license="MIT",
-    license_files=[],
+    license_files="LICENSE.txt",
     packages=["pytntprog"],
     install_requires=["colorama","termcolor","columnar","requests","py7zr"],
     zip_safe=False,
@@ -20,17 +20,10 @@ setup(
         ],
     },
     classifiers=[
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
-        "Programming Language :: Python :: 3.12",
-        "Programming Language :: Python :: 3.13",
-        "Programming Language :: Python :: 3.14",                
+        "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.6",
+    python_requires=">=3.10",
+)
 )

@@ -1,7 +1,7 @@
 # 3.0.0
 
 - [x] fix 403 error
-- [x] delete self-upgrad
+- [x] delete self-upgrade
 - [x] fix docs
 - [x] fix contributing
 
