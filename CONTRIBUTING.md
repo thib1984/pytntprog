@@ -10,3 +10,4 @@ pip3 install .
 pytntprog [...] #to retest
 deactivate
 
+python3 -m build && python3 -m twine upload dist/* #to publish to pypi
