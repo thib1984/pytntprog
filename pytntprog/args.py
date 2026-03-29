@@ -4,7 +4,19 @@ pygitscrum argparse gestion
 
 import argparse
 import sys
+import importlib.metadata
+from argparse import RawTextHelpFormatter
 
+def get_env_report():
+    lines = []
+
+    lines.append("\nInstalled packages:")
+    for dist in sorted(importlib.metadata.distributions(), key=lambda d: d.metadata["Name"].lower()):
+        name = dist.metadata["Name"]
+        version = dist.version
+        lines.append(f"  - {name}=={version}")
+
+    return "\n".join(lines)
 
 def compute_args():
     """
@@ -12,14 +24,27 @@ def compute_args():
     """
     my_parser = argparse.ArgumentParser(
         description="pytntprog displays the program of tnt tv in France",
-        epilog="""
-        Full documentation at: <https://github.com/thib1984/pytntprog>.
-        Report bugs to <https://github.com/thib1984/pytntprog/issues>.
-        MIT Licence.
-        Copyright (c) 2021 thib1984.
-        This is free software: you are free to change and redistribute it.
-        There is NO WARRANTY, to the extent permitted by law.
-        Written by thib1984.""",
+        epilog=f"""
+To upgrade, run:
+    pipx upgrade pytntprog --include-deps
+To install, run:
+    pipx install pytntprog
+To force reinstall, run:
+    pipx install pytntprog --force
+To uninstall, run:
+    pipx uninstall pytntprog
+To force uninstall (if needed), run:
+    pipx uninstall pytntprog --force
+
+{get_env_report()}
+
+Full documentation at: <https://github.com/thib1984/pytntprog>.
+Report bugs to <https://github.com/thib1984/pytntprog/issues>.
+MIT Licence.
+Copyright (c) 2021 thib1984.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Written by thib1984.""", formatter_class=RawTextHelpFormatter
     )
     my_parser.add_argument(
         "-i",

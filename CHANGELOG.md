@@ -1,3 +1,7 @@
+# 3.0.2
+
+- [x] display updates
+
 # 3.0.0
 
 - [x] fix 403 error
