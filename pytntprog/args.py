@@ -26,7 +26,8 @@ def compute_args():
         description="pytntprog displays the program of tnt tv in France",
         epilog=f"""
 To upgrade, run:
-    pipx upgrade pytntprog --include-deps
+    pipx upgrade pytntprog
+    pipx reinstall pytntprog #to force update dependencies
 To install, run:
     pipx install pytntprog
 To force reinstall, run:

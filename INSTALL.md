@@ -24,7 +24,8 @@ pip uninstall pytntprog --break-system-packages
 # Installation
 
 ```
-pipx install pytntprog
+pipx upgrade pytntprog
+pipx reinstall pytntprog #to force update dependencies
 ```
 
 # Upgrade
