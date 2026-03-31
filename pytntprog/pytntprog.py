@@ -183,9 +183,9 @@ def find():
                 break
     else:
         if alll:
-            headers = ["id", "jour", "heure", "chaine", "programmes"]
+            headers = ["id", "jour", "heure", "chaine", "programme"]
         else:
-            headers = ["id", "heure", "chaine", "programmes"]
+            headers = ["id", "heure", "chaine", "programme"]
         data = []
         for w in T:
 
@@ -193,7 +193,7 @@ def find():
                 resume = [
                     my_colored("[" + w["id"] + "] ", "red", nocolor),
                     w["day"],
-                    my_colored(w["start"], "green", nocolor),
+                    my_colored(w["start"]+" -> "+w["end"], "green", nocolor),
                     my_colored(w["channel"], "yellow", nocolor),
                     my_colored(
                         w["title"] + " " + w["subtitle"],
@@ -205,7 +205,7 @@ def find():
             else:
                 resume = [
                     my_colored("[" + w["id"] + "] ", "red", nocolor),
-                    my_colored(w["start"], "green", nocolor),
+                    my_colored(w["start"]+" -> "+w["end"], "green", nocolor),
                     my_colored(w["channel"], "yellow", nocolor),
                     my_colored(
                         w["title"] + " " + w["subtitle"],

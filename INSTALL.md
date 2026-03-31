@@ -24,17 +24,16 @@ pip uninstall pytntprog --break-system-packages
 # Installation
 
 ```
-pipx upgrade pytntprog
-pipx reinstall pytntprog #to force update dependencies
+pipx install pytntprog
 ```
 
 # Upgrade
 
+Use one of the following commands: 
 ```
-pipx upgrade pytntprog --include-deps
+pipx upgrade pytntprog #to update pytntprog
+pipx reinstall pytntprog #to force update dependencies
 ```
-
-This command upgrades the application to the latest version and also updates all its dependencies.
 
 # Uninstall
 

@@ -1,3 +1,9 @@
+# 3.1.0
+
+- [x] clean docs
+- [x] add end date
+- [x] fix contributing.md
+
 # 3.0.2
 
 - [x] display updates

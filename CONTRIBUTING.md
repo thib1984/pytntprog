@@ -23,32 +23,20 @@ git clone https://github.com/thib1984/pytntprog.git
 # Afterwards, update it using regular git commands (git pull, git fetch, etc.)
 cd pytntprog 
 
-# Remove any previous virtual environment to start fresh
-rm -rf pytntprog_env 
-
-# Create a virtual environment to isolate dependencies for this project
-python3 -m venv pytntprog_env
-source pytntprog_env/bin/activate
-
 # Install the local package in the isolated environment
-pip install .
+pipx install . --force
 
 # Test the app locally within the virtual environment
 pytntprog [...] 
 
 # Optional: reinstall if needed and retest
-pip install .
+pipx install . --force
 pytntprog [...] 
 
-# Exit the virtual environment
-deactivate
-
 # Reinstall the globally published version via pipx if needed
+pipx uninstall pytntprog
 pipx install pytntprog 
 ``` 
-
-A venv (virtual environment) isolates this project's Python dependencies from the system, preventing version conflicts and keeping things clean.
-
 
 # Publish to pypi
 

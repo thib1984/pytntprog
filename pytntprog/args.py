@@ -25,8 +25,8 @@ def compute_args():
     my_parser = argparse.ArgumentParser(
         description="pytntprog displays the program of tnt tv in France",
         epilog=f"""
-To upgrade, run:
-    pipx upgrade pytntprog
+To upgrade, run of the following commands:
+    pipx upgrade pytntprog #to update pytntprog
     pipx reinstall pytntprog #to force update dependencies
 To install, run:
     pipx install pytntprog
